@@ -1,8 +1,15 @@
-var app = angular.module('ApData', ['ngMaterial']);
+angular.module('ApData', ['ngMaterial', 'ngRoute']).config(['$routeProvider',
+  function($routeProvider, $mdThemingProvider){
+    $routeProvider.
+      when('/analysis',{
+        templateUrl: 'partials/analysis.html',
+        controller: 'AnalysisCtrl'
+      }).
+      otherwise({
+        redirectTo:'/analysis'
+      });
 
-app.controller('AppCtrl', ['$scope', '$mdSidenav', function($scope, $mdSidenav){
-  $scope.toggleSidenav = function(menuId) {
-    $mdSidenav(menuId).toggle();
-  };
-
+      $mdThemingProvider.theme('default')
+      .primaryPalette('pink')
+      .accentPalette('orange');
 }]);
