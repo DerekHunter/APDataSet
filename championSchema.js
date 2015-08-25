@@ -2,13 +2,15 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var championSchema = new Schema({
-  champId: String,
+  champId: Number,
   kills: Number,
   deaths: Number,
   assists: Number,
   totalCrowdControl: Number,
   totalDamage: Number,
   winner: Boolean,
+  region: String,
+  ranked: Boolean,
   timeline: {
       "csDiffPerMinDeltas": {
           "thirtyToEnd": Number,
