@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var itemSchema = new Schema({
   itemId: String,
-  averageBought: Number  
-
+  averageBought: Number
+  region: String,
+  ranked: Boolean,
 })
