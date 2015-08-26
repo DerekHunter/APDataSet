@@ -14,14 +14,19 @@ angular.module('ApData').controller('ExploreCtrl', ['$scope', function($scope){
       }
     ];
 
-    $scope.regions = ["na", "oce", "eune", "br"]
+    $scope.loading = false;
+    $scope.currentRegion = "NA"
+    $scope.regions = ['NA', 'OCE', 'EUNE', 'BR']
     $scope.selectedChampion = $scope.champions[0];
     $scope.searchText = null;
-
     $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
     $scope.series = ['Series A', 'Series B'];
     $scope.selectedItemChange = function(champion){
-      console.log("Populate New Data");
+      console.log("Changed item");
+    }
+
+    $scope.onRegionChange = function(item){
+      $scope.currentRegion = item
     }
 
     $scope.querySearch = function (query) {

@@ -3,20 +3,20 @@
     <md-card flex = "60" flex-md = "80">
       <md-card-content>
         <div layout="row" layout-align="start center" flex>
-          <md-menu>
+          <md-menu md-offset="12 20">
             <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
-              Region: {{regions[0]}}
+              Region: {{currentRegion}}
             </md-button>
-            <md-menu-content width=2>
+            <md-menu-content>
               <div layout="column" layout-align="start center">
                 <div ng-repeat="item in regions">
-              <md-menu-item>
-                <md-button ng-click="doSomething()" aria-label="Do something">
-                  {{item}}
-                </md-button>
+                  <md-menu-item>
+                    <md-button ng-click="onRegionChange(item)" aria-label="Do something">
+                      {{item}}
+                    </md-button>
+                  </div>
+                </md-menu-item>
               </div>
-              </md-menu-item>
-            </div>
             </md-menu-content>
           </md-menu>
           <div layout="row" layout-align="end start" flex>
@@ -44,70 +44,15 @@
           </md-autocomplete>
         </div>
       </div>
-      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
-      labels="labels"></canvas>
-    </md-card-content>
-  </md-card>
-</div>
-
-<div layout="column">
-  <div layout="row" layout-align = "center">
-    <md-card flex = "60" flex-md = "80">
-      <md-card-content>
-        <div layout="column">
-          <div layout="row">
-            <md-autocomplete
-            md-selected-item="selectedChampion"
-            md-search-text-change="searchTextChange(searchText)"
-            md-search-text="searchText"
-            md-selected-item-change="selectedItemChange(champion)"
-            md-items="champion in querySearch(searchText)"
-            md-item-text="champion.display"
-            md-min-length="0"
-            md-floating-label="Champion">
-            <md-item-template>
-              <span class="item-title">
-                <span> {{champion.display}} </span>
-              </span>
-            </md-item-template>
-          </md-autocomplete>
-        </div>
+      <div ng-if="!loading">
+        <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
+        labels="labels"></canvas>
       </div>
-      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
-      labels="labels"></canvas>
-
-    </md-card-content>
-  </md-card>
-</div>
-</div>
-
-<div layout="column">
-  <div layout="row" layout-align = "center">
-    <md-card flex = "60" flex-md = "80">
-      <md-card-content>
-        <div layout="column">
-          <div layout="row">
-            <md-autocomplete
-            md-selected-item="selectedChampion"
-            md-search-text-change="searchTextChange(searchText)"
-            md-search-text="searchText"
-            md-selected-item-change="selectedItemChange(champion)"
-            md-items="champion in querySearch(searchText)"
-            md-item-text="champion.display"
-            md-min-length="0"
-            md-floating-label="Champion">
-            <md-item-template>
-              <span class="item-title">
-                <span> {{champion.display}} </span>
-              </span>
-            </md-item-template>
-          </md-autocomplete>
-        </div>
+      <div ng-if="loading">
+        <div layout="row" layout-align="center">
+        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>
-      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
-      labels="labels"></canvas>
-
-    </md-card-content>
-  </md-card>
-</div>
+    </div>
+  </md-card-content>
+</md-card>
 </div>
