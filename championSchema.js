@@ -8,7 +8,7 @@ var championSchema = new Schema({
   assists: Number,
   totalCrowdControl: Number,
   totalDamage: Number,
-  winner: Boolean,
+  winRate: Number,
   region: String,
   ranked: Boolean,
   timeline: {

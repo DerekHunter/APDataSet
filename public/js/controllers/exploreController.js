@@ -7,14 +7,15 @@ function($scope, ChampionService, StaticDataService){
 
     $scope.currentRegion = "NA"
     $scope.ranked = false;
-    $scope.currentChampion.setCurrentChampion(1, $scope.currentRegion, $scope.ranked);
+    $scope.currentStat = "kills"
+    $scope.currentChampion.repopulateData(1, $scope.currentRegion, $scope.ranked);
 
 
     $scope.searchText = $scope.static.champions[0].display;
 
     $scope.$watch(function(scope){ return scope.ranked},
                   function(){
-                    $scope.currentChampion.setCurrentChampion($scope.currentChampion.id, $scope.currentRegion, $scope.ranked);
+                    $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
                   })
 
     $scope.selectedChampionChange = function(champId){
@@ -22,7 +23,7 @@ function($scope, ChampionService, StaticDataService){
           for(i = 0; i < $scope.static.champions.length; i++){
             if( $scope.static.champions[i].id == champId){
               $scope.searchText = $scope.static.champions[i].display
-              $scope.currentChampion.setCurrentChampion($scope.static.champions[i].id, $scope.currentRegion, $scope.ranked);
+              $scope.currentChampion.repopulateData($scope.static.champions[i].id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
             }
           }
       }
@@ -30,7 +31,12 @@ function($scope, ChampionService, StaticDataService){
 
     $scope.onRegionChange = function(item){
       $scope.currentRegion = item
-      $scope.currentChampion.setCurrentChampion($scope.currentChampion.id, $scope.currentRegion, $scope.ranked);
+      $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
+    }
+
+    $scope.onStatChange = function(stat){
+      $scope.currentStat = stat;
+      $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
     }
 
     $scope.querySearch = function (query) {

@@ -7,6 +7,8 @@ angular.module('ApData').factory('StaticDataService', function() {
      {id:"3", display:"Jinx"}
    ];
 
+   StaticData.statistics = ["Kills", "Deaths", "Assists"]
+
    StaticData.regions = ['NA', 'OCE', 'EUNE', 'BR']
 
    return StaticData;

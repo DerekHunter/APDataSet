@@ -25,24 +25,44 @@
             </md-switch>
           </div>
         </div>
-        <div layout="row" layout-align="start start">
-          <div layout = "row" layout-aign="start start" flex="25">
-            <md-autocomplete
-            md-selected-item="currentChampion.name"
-            md-search-text-change="searchTextChange(searchText)"
-            md-search-text="searchText"
-            md-selected-item-change="selectedChampionChange(champion.id)"
-            md-items="champion in querySearch(searchText)"
-            md-item-text="champion.display"
-            md-min-length="0"
-            md-floating-label="Champion">
-            <md-item-template>
-              <span class="item-title">
-                <span> {{champion.display}} </span>
-              </span>
-            </md-item-template>
-          </md-autocomplete>
+        <div layout="row">
+          <div layout="row" layout-align="start start">
+            <div layout = "row" layout-aign="start start" flex="25">
+              <md-autocomplete
+              md-selected-item="currentChampion.name"
+              md-search-text-change="searchTextChange(searchText)"
+              md-search-text="searchText"
+              md-selected-item-change="selectedChampionChange(champion.id)"
+              md-items="champion in querySearch(searchText)"
+              md-item-text="champion.display"
+              md-min-length="0"
+              md-floating-label="Champion">
+              <md-item-template>
+                <span class="item-title">
+                  <span> {{champion.display}} </span>
+                </span>
+              </md-item-template>
+            </md-autocomplete>
+          </div>
         </div>
+
+        <md-menu md-offset="12 20">
+          <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
+            Statistic: {{currentStat}}
+          </md-button>
+          <md-menu-content>
+            <div layout="column" layout-align="start center">
+              <div ng-repeat="stat in static.statistics">
+                <md-menu-item>
+                  <md-button ng-click="onStatChange(stat)" aria-label="Do something">
+                    {{stat}}
+                  </md-button>
+                </div>
+              </md-menu-item>
+            </div>
+          </md-menu-content>
+        </md-menu>
+
       </div>
       <div ng-if="!champion.isLoading">
         <canvas id="bar" class="chart chart-bar" data="currentChampion.data"
@@ -50,9 +70,9 @@
       </div>
       <div ng-if="champion.isLoading">
         <div layout="row" layout-align="center">
-        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+          <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+        </div>
       </div>
-    </div>
-  </md-card-content>
-</md-card>
+    </md-card-content>
+  </md-card>
 </div>
