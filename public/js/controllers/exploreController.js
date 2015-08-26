@@ -14,6 +14,7 @@ angular.module('ApData').controller('ExploreCtrl', ['$scope', function($scope){
       }
     ];
 
+    $scope.regions = ["na", "oce", "eune", "br"]
     $scope.selectedChampion = $scope.champions[0];
     $scope.searchText = null;
 
