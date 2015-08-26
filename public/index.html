@@ -7,22 +7,28 @@
   <meta name="viewport" content="initial-scale=1" />
 </head>
 <body layout="column">
-  <div layout="column" layout-fill>
     <md-toolbar layout-padding>
       <div class="md-toolbar-tools">
         <span>AP ITEM CHANGE</span>
       </div>
-      <md-tabs>
-        <md-tab label="ANALYSIS"></md-tab>
-        <md-tab label="EXPLORE"></md-tab>
-        <md-tab label="FAQ"></md-tab>
-      </md-tabs>
     </md-toolbar>
-    <md-content layout-padding class = "content">
-      <ng-view></ng-view>
-    </md-content>
-  </div>
-
+      <md-tabs md-dynamic-height class="md-primary">
+        <md-tab label = "ANALYSIS">
+          <div class="content" ng-controller = "AnalysisCtrl">
+            <div ng-include src="'partials/analysis.html'"></div>
+          </div>
+        </md-tab>
+        <md-tab label = "EXPLORE">
+          <div class="content" ng-controller="ExploreCtrl">
+            <div ng-include src="'partials/explore.html'"></div>
+          </div>
+        </md-tab>
+        <md-tab label = "faq">
+          <div class="content">
+            <div ng-include src="'partials/faq.html'"></div>
+          </div>
+        </md-tab>
+      </md-tabs>
   <!--Dependencies -->
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-route/angular-route.min.js"></script>
@@ -34,5 +40,6 @@
 
   <script src="js/app.js"></script>
   <script src="js/controllers/analysisController.js"></script>
+  <script src="js/controllers/exploreController.js"></script>
 </body>
 </html>

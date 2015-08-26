@@ -1,0 +1,92 @@
+<div layout="column">
+  <div layout="row" layout-align = "center">
+    <md-card flex = "60" flex-md = "80">
+      <md-card-content>
+        <div layout="column">
+          <div layout="row">
+            <md-autocomplete
+            md-selected-item="selectedChampion"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(champion)"
+            md-items="champion in querySearch(searchText)"
+            md-item-text="champion.display"
+            md-min-length="0"
+            md-floating-label="Champion">
+            <md-item-template>
+              <span class="item-title">
+                <span> {{champion.display}} </span>
+              </span>
+            </md-item-template>
+          </md-autocomplete>
+        </div>
+      </div>
+      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
+      labels="labels"></canvas>
+
+    </md-card-content>
+  </md-card>
+</div>
+</div>
+
+<div layout="column">
+  <div layout="row" layout-align = "center">
+    <md-card flex = "60" flex-md = "80">
+      <md-card-content>
+        <div layout="column">
+          <div layout="row">
+            <md-autocomplete
+            md-selected-item="selectedChampion"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(champion)"
+            md-items="champion in querySearch(searchText)"
+            md-item-text="champion.display"
+            md-min-length="0"
+            md-floating-label="Champion">
+            <md-item-template>
+              <span class="item-title">
+                <span> {{champion.display}} </span>
+              </span>
+            </md-item-template>
+          </md-autocomplete>
+        </div>
+      </div>
+      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
+      labels="labels"></canvas>
+
+    </md-card-content>
+  </md-card>
+</div>
+</div>
+
+<div layout="column">
+  <div layout="row" layout-align = "center">
+    <md-card flex = "60" flex-md = "80">
+      <md-card-content>
+        <div layout="column">
+          <div layout="row">
+            <md-autocomplete
+            md-selected-item="selectedChampion"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(champion)"
+            md-items="champion in querySearch(searchText)"
+            md-item-text="champion.display"
+            md-min-length="0"
+            md-floating-label="Champion">
+            <md-item-template>
+              <span class="item-title">
+                <span> {{champion.display}} </span>
+              </span>
+            </md-item-template>
+          </md-autocomplete>
+        </div>
+      </div>
+      <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
+      labels="labels"></canvas>
+
+    </md-card-content>
+  </md-card>
+</div>
+</div>
