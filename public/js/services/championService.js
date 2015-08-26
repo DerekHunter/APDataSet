@@ -4,9 +4,7 @@ angular.module('ApData').factory('ChampionService', function() {
    ChampionService.isLoading = true;
 
    ChampionService.setCurrentChampion = function(id, region, ranked){
-     console.log(id)
-     console.log(region)
-     console.log(ranked);
+
       ChampionService.isLoading = true
       ChampionService.labels = ['a',"b","c","d","e","f","g","h","i"]
       if(id == 1){
