@@ -1,32 +1,38 @@
 <html lang="en" ng-app="ApData">
-  <head>
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
-    <meta name="viewport" content="initial-scale=1" />
-  </head>
-  <body layout="column">
-    <md-toolbar layout="row">
+<head>
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+  <link rel="stylesheet" href="css/main.css"
+  <meta name="viewport" content="initial-scale=1" />
+</head>
+<body layout="column">
+  <div layout="column" layout-fill>
+    <md-toolbar layout-padding>
       <div class="md-toolbar-tools">
-        <h1>Ap Item Change</h1>
+        <span>AP ITEM CHANGE</span>
       </div>
+      <md-tabs>
+        <md-tab label="ANALYSIS"></md-tab>
+        <md-tab label="EXPLORE"></md-tab>
+        <md-tab label="FAQ"></md-tab>
+      </md-tabs>
     </md-toolbar>
-    {{message}}
+    <md-content layout-padding class = "content">
+      <ng-view></ng-view>
+    </md-content>
+  </div>
 
-    <ng-view></ng-view>
+  <!--Dependencies -->
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+  <script src="bower_components/angular-material/angular-material.min.js"></script>
+  <script src="bower_components/Chart.js/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
 
-
-
-    <!--Dependencies -->
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
-    <script src="bower_components/Chart.js/Chart.min.js"></script>
-    <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
-
-    <script src="js/app.js"></script>
-    <script src="js/controllers/analysisController.js"></script>
-  </body>
+  <script src="js/app.js"></script>
+  <script src="js/controllers/analysisController.js"></script>
+</body>
 </html>

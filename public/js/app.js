@@ -1,4 +1,4 @@
-angular.module('ApData', ['ngMaterial', 'ngRoute']).config(['$routeProvider',
+angular.module('ApData', ['ngMaterial', 'ngRoute', "chart.js"]).config(['$routeProvider', '$mdThemingProvider',
   function($routeProvider, $mdThemingProvider){
     $routeProvider.
       when('/analysis',{
@@ -10,6 +10,7 @@ angular.module('ApData', ['ngMaterial', 'ngRoute']).config(['$routeProvider',
       });
 
       $mdThemingProvider.theme('default')
-      .primaryPalette('pink')
-      .accentPalette('orange');
+      .primaryPalette('blue-grey')
+      .accentPalette('yellow')
+      .backgroundPalette('grey');
 }]);

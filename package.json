@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/DerekHunter/APDataSet/issues"
   },
-  "homepage": "https://github.com/DerekHunter/APDataSet"
+  "homepage": "https://github.com/DerekHunter/APDataSet",
+  "dependencies": {
+    "express": "^4.13.3",
+    "mongoose": "^4.1.3"
+  }
 }
