@@ -9,7 +9,7 @@
             </md-button>
             <md-menu-content>
               <div layout="column" layout-align="start center">
-                <div ng-repeat="item in regions">
+                <div ng-repeat="item in static.regions">
                   <md-menu-item>
                     <md-button ng-click="onRegionChange(item)" aria-label="Do something">
                       {{item}}
@@ -28,10 +28,10 @@
         <div layout="row" layout-align="start start">
           <div layout = "row" layout-aign="start start" flex="25">
             <md-autocomplete
-            md-selected-item="selectedChampion"
+            md-selected-item="currentChampion.name"
             md-search-text-change="searchTextChange(searchText)"
             md-search-text="searchText"
-            md-selected-item-change="selectedItemChange(champion)"
+            md-selected-item-change="selectedChampionChange(champion.id)"
             md-items="champion in querySearch(searchText)"
             md-item-text="champion.display"
             md-min-length="0"
@@ -44,11 +44,11 @@
           </md-autocomplete>
         </div>
       </div>
-      <div ng-if="!loading">
-        <canvas id="bar" class="chart chart-bar" data="selectedChampion.data"
-        labels="labels"></canvas>
+      <div ng-if="!champion.isLoading">
+        <canvas id="bar" class="chart chart-bar" data="currentChampion.data"
+        labels="currentChampion.labels"></canvas>
       </div>
-      <div ng-if="loading">
+      <div ng-if="champion.isLoading">
         <div layout="row" layout-align="center">
         <md-progress-circular md-mode="indeterminate"></md-progress-circular>
       </div>

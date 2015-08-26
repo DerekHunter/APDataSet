@@ -1,28 +1,25 @@
-angular.module('ApData').controller('ExploreCtrl', ['$scope', function($scope){
-    $scope.champions =[
-      {value:"veigar", display: "Veigar",
-        data:[[65, 59, 80, 81, 56, 55, 40],
-              [28, 48, 40, 19, 86, 27, 90]]
-      },
-      {value:"riven", display: "Riven",
-        data: [[25, 99, 85, 41, 56, 55, 40],
-               [18, 28, 60, 99, 86, 27, 90]]
-      },
-      {value:"jinx", display:"Jinx",
-        data: [[25, 29, 25, 41, 56, 95, 90],
-               [18, 38, 10, 39, 86, 27, 20]]
-      }
-    ];
+angular.module('ApData')
+.controller('ExploreCtrl',['$scope', 'ChampionService', 'StaticDataService',
+function($scope, ChampionService, StaticDataService){
 
-    $scope.loading = false;
+    $scope.currentChampion = ChampionService;
+    $scope.static = StaticDataService;
+
+    $scope.currentChampion.setCurrentChampion(1);
+
     $scope.currentRegion = "NA"
-    $scope.regions = ['NA', 'OCE', 'EUNE', 'BR']
-    $scope.selectedChampion = $scope.champions[0];
-    $scope.searchText = null;
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
-    $scope.selectedItemChange = function(champion){
-      console.log("Changed item");
+
+    $scope.searchText = $scope.static.champions[0].display;
+
+    $scope.selectedChampionChange = function(champId){
+      if(isValidChampion(champId)){
+          for(i = 0; i < $scope.static.champions.length; i++){
+            if( $scope.static.champions[i].id == champId){
+              $scope.searchText = $scope.static.champions[i].display
+              $scope.currentChampion.setCurrentChampion($scope.static.champions[i].id);
+            }
+          }
+      }
     }
 
     $scope.onRegionChange = function(item){
@@ -33,7 +30,7 @@ angular.module('ApData').controller('ExploreCtrl', ['$scope', function($scope){
       if($scope.searchText == ''){
         return $scope.champions
       }else{
-        var results = query ? $scope.champions.filter( createFilterFor(query) ) : [];
+        var results = query ? $scope.static.champions.filter( createFilterFor(query) ) : [];
         return results;
       }
     }
@@ -41,7 +38,16 @@ angular.module('ApData').controller('ExploreCtrl', ['$scope', function($scope){
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(champion) {
-        return (champion.value.indexOf(lowercaseQuery) === 0);
+        return (angular.lowercase(champion.display).indexOf(lowercaseQuery) === 0);
       };
+    }
+
+    function isValidChampion(name){
+      for(i = 0; i < $scope.static.champions.length; i++){
+        if( $scope.static.champions[i].id == name){
+          return true;
+        }
+      }
+      return false;
     }
 }]);
