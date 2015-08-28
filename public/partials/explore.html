@@ -9,10 +9,10 @@
             </md-button>
             <md-menu-content>
               <div layout="column" layout-align="start center">
-                <div ng-repeat="item in static.regions">
-                  <md-menu-item>
-                    <md-button ng-click="onRegionChange(item)" aria-label="Do something">
-                      {{item}}
+                <div ng-repeat="region in static.regions">
+                  <md-menu-region>
+                    <md-button ng-click="onRegionChange(region)" aria-label="Do something">
+                      {{region}}
                     </md-button>
                   </div>
                 </md-menu-item>
@@ -25,9 +25,9 @@
             </md-switch>
           </div>
         </div>
-        <div layout="row">
-          <div layout="row" layout-align="start start">
-            <div layout = "row" layout-aign="start start" flex="25">
+        <div layout="row" layout-align="start center">
+            <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{currentChampion.name.display}}.png" alt ="champ img" height = "30" widht = "30">
+            <div layout = "row" flex="25">
               <md-autocomplete
               md-selected-item="currentChampion.name"
               md-search-text-change="searchTextChange(searchText)"
@@ -39,7 +39,7 @@
               md-floating-label="Champion">
               <md-item-template>
                 <div layout="row" layout-align="start center">
-                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.display}}.png" alt ="champ img" flex="33">
+                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.display}}.png" alt ="champ img" height = "30" width ="30">
                   <span class="item-title">
                     {{champion.display}}
                   </span>
@@ -47,8 +47,6 @@
               </md-item-template>
             </md-autocomplete>
           </div>
-        </div>
-
         <md-menu md-offset="12 20">
           <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
             Statistic: {{currentStat}}
