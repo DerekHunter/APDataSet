@@ -38,9 +38,12 @@
               md-min-length="0"
               md-floating-label="Champion">
               <md-item-template>
-                <span class="item-title">
-                  <span> {{champion.display}} </span>
-                </span>
+                <div layout="row" layout-align="start center">
+                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.display}}.png" alt ="champ img" flex="33">
+                  <span class="item-title">
+                    {{champion.display}}
+                  </span>
+              </div>
               </md-item-template>
             </md-autocomplete>
           </div>
