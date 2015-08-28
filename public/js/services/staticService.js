@@ -1,16 +1,39 @@
-angular.module('ApData').factory('StaticDataService', function() {
+angular.module('ApData').factory('StaticDataService',['$http', function($http) {
    var StaticData = {};
 
-   StaticData.champions =[
-     {id:"1", display: "Veigar"},
-     {id:"2", display: "Riven"},
-     {id:"3", display:"Jinx"},
-     {id:"4", display:"Rengar"}
-   ];
+   StaticData.champions =[];
 
-   StaticData.statistics = ["Kills", "Deaths", "Assists"]
+   StaticData.loadChampData = function(callback){
+     $http.get('http://localhost:3000/api/static/champions').then(function(response){
+       for( champion in response.data){
+         champ = {}
+         champ.id = response.data[champion].id;
+         champ.name = response.data[champion].name;
+         champ.image = response.data[champion].image.full;
+         StaticData.champions.push(champ);
+       }
+       console.log(StaticData.champions)
+       StaticData.statistics = ["Kills", "Deaths", "Assists"]
+       StaticData.regions = ['NA', 'OCE', 'EUNE', 'BR']
+       callback();
+     })
+   }
 
-   StaticData.regions = ['NA', 'OCE', 'EUNE', 'BR']
+   StaticData.loadItemData = function(callback){
+     $http.get('http://localhost:3000/api/static/champions').then(function(response){
+       for( champion in response.data){
+         champ = {}
+         champ.id = response.data[champion].id;
+         champ.name = response.data[champion].name;
+         champ.image = response.data[champion].image.full;
+         StaticData.champions.push(champ);
+       }
+       console.log(StaticData.champions)
+       StaticData.statistics = ["Kills", "Deaths", "Assists"]
+       StaticData.regions = ['NA', 'OCE', 'EUNE', 'BR']
+       callback();
+     })
+   }
 
    return StaticData;
- });
+ }]);

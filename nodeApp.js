@@ -4,11 +4,13 @@ var router = express.Router();
 var app = express();
 
 apiKey = ''
-
+if(apiKey == ''){
+  console.log("Not a valid api key");
+}
 var staticChampData = {}
 var staticItemData = {}
 
-https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key='+apiKey, function(res) {
+https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=image&api_key='+apiKey, function(res) {
   champBuffer = ''
   res.on('data', function(data){
     champBuffer += data
@@ -32,7 +34,6 @@ https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?api_key='
 
 router.get('/static/champions',function(req, res){
   res.json(staticChampData);
-
 });
 
 router.get('/static/items',function(req, res){

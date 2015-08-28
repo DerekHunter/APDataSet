@@ -5,13 +5,13 @@ function($scope, ChampionService, StaticDataService){
     $scope.currentChampion = ChampionService;
     $scope.static = StaticDataService;
 
-    $scope.currentRegion = "NA"
-    $scope.ranked = false;
-    $scope.currentStat = "kills"
-    $scope.currentChampion.repopulateData(1, $scope.currentRegion, $scope.ranked);
-
-
-    $scope.searchText = $scope.static.champions[0].display;
+    $scope.static.loadChampData(function(){
+      $scope.currentRegion = "NA"
+      $scope.ranked = false;
+      $scope.currentStat = "kills"
+      $scope.currentChampion.repopulateData(1, $scope.currentRegion, $scope.ranked);
+      $scope.searchText = $scope.static.champions[0].name;
+    })
 
     $scope.$watch(function(scope){ return scope.ranked},
                   function(){
@@ -22,7 +22,7 @@ function($scope, ChampionService, StaticDataService){
       if(isValidChampion(champId)){
           for(i = 0; i < $scope.static.champions.length; i++){
             if( $scope.static.champions[i].id == champId){
-              $scope.searchText = $scope.static.champions[i].display
+              $scope.searchText = $scope.static.champions[i].name
               $scope.currentChampion.repopulateData($scope.static.champions[i].id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
             }
           }
@@ -51,7 +51,7 @@ function($scope, ChampionService, StaticDataService){
     function createFilterFor(query) {
       var lowercaseQuery = angular.lowercase(query);
       return function filterFn(champion) {
-        return (angular.lowercase(champion.display).indexOf(lowercaseQuery) === 0);
+        return (angular.lowercase(champion.name).indexOf(lowercaseQuery) === 0);
       };
     }
 

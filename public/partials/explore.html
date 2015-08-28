@@ -34,14 +34,14 @@
               md-search-text="searchText"
               md-selected-item-change="selectedChampionChange(champion.id)"
               md-items="champion in querySearch(searchText)"
-              md-item-text="champion.display"
+              md-item-text="champion.name"
               md-min-length="0"
               md-floating-label="Champion">
               <md-item-template>
                 <div layout="row" layout-align="start center">
-                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.display}}.png" alt ="champ img" height = "30" width ="30">
+                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.image}}" alt ="champ img" height = "30" width ="30">
                   <span class="item-title">
-                    {{champion.display}}
+                    {{champion.name}}
                   </span>
               </div>
               </md-item-template>
