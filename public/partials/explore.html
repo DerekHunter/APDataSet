@@ -29,9 +29,11 @@
               </md-switch>
             </div>
           </div>
-          <div layout="row" layout-align="start center">
-            <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{currentChampion.image}}" alt ="champ img" height = "30" widht = "30">
-            <div layout = "row" flex="25">
+          <div layout="row" layout-align="start start">
+            <div layout="column" layout-align="center start" layout-margin>
+              <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{currentChampion.image}}" alt ="champ img" height = "40" widht = "40">
+            </div>
+            <div layout = "row" flex="20">
               <md-autocomplete
               md-selected-item="currentChampion.name"
               md-search-text-change="searchTextChange(searchText)"
