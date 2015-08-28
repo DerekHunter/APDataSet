@@ -2,41 +2,49 @@ angular.module('ApData')
 .controller('ExploreCtrl',['$scope', 'ChampionService', 'StaticDataService',
 function($scope, ChampionService, StaticDataService){
 
+    $scope.initializing = true;
     $scope.currentChampion = ChampionService;
     $scope.static = StaticDataService;
+
 
     $scope.static.loadChampData(function(){
       $scope.currentRegion = "NA"
       $scope.ranked = false;
       $scope.currentStat = "kills"
-      $scope.currentChampion.repopulateData(1, $scope.currentRegion, $scope.ranked);
+      $scope.selectedChampion = $scope.static.champions[0];
+      $scope.currentChampion.repopulateData($scope.selectedChampion, $scope.currentRegion, $scope.ranked);
       $scope.searchText = $scope.static.champions[0].name;
+
+      $scope.$watch(function(scope){ return scope.ranked},
+                    function(){
+                      $scope.currentChampion.repopulateData($scope.selectedChampion, $scope.currentRegion, $scope.ranked);
+                    })
+      $scope.initializing = false;
     })
 
-    $scope.$watch(function(scope){ return scope.ranked},
-                  function(){
-                    $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
-                  })
-
-    $scope.selectedChampionChange = function(champId){
-      if(isValidChampion(champId)){
-          for(i = 0; i < $scope.static.champions.length; i++){
-            if( $scope.static.champions[i].id == champId){
-              $scope.searchText = $scope.static.champions[i].name
-              $scope.currentChampion.repopulateData($scope.static.champions[i].id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
+    $scope.selectedChampionChange = function(champion){
+      if(champion){
+        if(isValidChampion(champion)){
+            for(i = 0; i < $scope.static.champions.length; i++){
+              if( $scope.static.champions[i].id == champion.id){
+                $scope.selectedChampion = champion
+                $scope.currentChampion.repopulateData($scope.selectedChampion, $scope.currentRegion, $scope.ranked);
+              }
             }
-          }
+        }
       }
     }
 
-    $scope.onRegionChange = function(item){
-      $scope.currentRegion = item
-      $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
+    $scope.onRegionChange = function(region){
+      $scope.currentRegion = region
+      $scope.currentChampion.repopulateData($scope.selectedChampion, $scope.currentRegion, $scope.ranked);
+
     }
 
     $scope.onStatChange = function(stat){
       $scope.currentStat = stat;
-      $scope.currentChampion.repopulateData($scope.currentChampion.id, $scope.currentRegion, $scope.ranked, $scope.currentStat);
+      $scope.currentChampion.repopulateData($scope.selectedChampion, $scope.currentRegion, $scope.ranked);
+
     }
 
     $scope.querySearch = function (query) {
@@ -55,9 +63,9 @@ function($scope, ChampionService, StaticDataService){
       };
     }
 
-    function isValidChampion(name){
+    function isValidChampion(champion){
       for(i = 0; i < $scope.static.champions.length; i++){
-        if( $scope.static.champions[i].id == name){
+        if( $scope.static.champions[i].id == champion.id){
           return true;
         }
       }
