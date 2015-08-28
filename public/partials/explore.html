@@ -1,87 +1,91 @@
 <div layout="column">
-  <div ng-if="initializing" layout ="row" layout-align = "center">
-    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-  </div>
-  <div ng-if="!initializing">
-    <div layout="row" layout-align = "center">
-      <md-card flex = "60" flex-md = "80">
-        <md-card-content>
-          <div layout="row" layout-align="start center" flex>
+  <div ng-controller = "ChampCtrl">
+    <div ng-if="initializing" layout ="row" layout-align = "center">
+      <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    </div>
+    <div ng-if="!initializing">
+      <div layout="row" layout-align = "center">
+        <md-card flex = "60" flex-md = "80">
+          <md-card-content>
+            <div layout="row" layout-align="start center" flex>
+              <md-menu md-offset="12 20">
+                <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
+                  Region: {{currentRegion}}
+                </md-button>
+                <md-menu-content>
+                  <div layout="column" layout-align="start center">
+                    <div ng-repeat="region in static.regions">
+                      <md-menu-region>
+                        <md-button ng-click="onRegionChange(region)" aria-label="Do something">
+                          {{region}}
+                        </md-button>
+                      </div>
+                    </md-menu-item>
+                  </div>
+                </md-menu-content>
+              </md-menu>
+              <div layout="row" layout-align="end start" flex>
+                <md-switch ng-model="$parent.ranked" class="md-primary" ng-model="isActive" aria-label="Ranked">
+                  Ranked
+                </md-switch>
+              </div>
+            </div>
+            <div layout="row" layout-align="start start">
+              <div layout="column" layout-align="center start" layout-margin>
+                <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{currentChampion.image}}" alt ="champ img" height = "40" widht = "40">
+              </div>
+              <div layout = "row" flex="20">
+                <md-autocomplete
+                md-selected-item="currentChampion.name"
+                md-search-text-change="searchTextChange(searchText)"
+                md-search-text="searchText"
+                md-selected-item-change="selectedChampionChange(champion)"
+                md-items="champion in querySearch(searchText)"
+                md-item-text="champion.name"
+                md-min-length="0"
+                md-floating-label="Champion">
+                <md-item-template>
+                  <div layout="row" layout-align="start center">
+                    <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.image}}" alt ="champ img" height = "30" width ="30">
+                    <span class="item-title">
+                      {{champion.name}}
+                    </span>
+                  </div>
+                </md-item-template>
+              </md-autocomplete>
+            </div>
             <md-menu md-offset="12 20">
               <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
-                Region: {{currentRegion}}
+                Statistic: {{currentStat}}
               </md-button>
               <md-menu-content>
                 <div layout="column" layout-align="start center">
-                  <div ng-repeat="region in static.regions">
-                    <md-menu-region>
-                      <md-button ng-click="onRegionChange(region)" aria-label="Do something">
-                        {{region}}
+                  <div ng-repeat="stat in static.statistics">
+                    <md-menu-item>
+                      <md-button ng-click="onStatChange(stat)" aria-label="Do something">
+                        {{stat}}
                       </md-button>
                     </div>
                   </md-menu-item>
                 </div>
               </md-menu-content>
             </md-menu>
-            <div layout="row" layout-align="end start" flex>
-              <md-switch ng-model="$parent.ranked" class="md-primary" ng-model="isActive" aria-label="Ranked">
-                Ranked
-              </md-switch>
+          </div>
+          <div ng-if="!currentChampion.isLoading">
+            <canvas id="bar" class="chart chart-bar" data="currentChampion.data"
+            labels="currentChampion.labels"></canvas>
+          </div>
+          <div ng-if="currentChampion.isLoading">
+            <div layout="row" layout-align="center">
+              <md-progress-circular md-mode="indeterminate"></md-progress-circular>
             </div>
           </div>
-          <div layout="row" layout-align="start start">
-            <div layout="column" layout-align="center start" layout-margin>
-              <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{currentChampion.image}}" alt ="champ img" height = "40" widht = "40">
-            </div>
-            <div layout = "row" flex="20">
-              <md-autocomplete
-              md-selected-item="currentChampion.name"
-              md-search-text-change="searchTextChange(searchText)"
-              md-search-text="searchText"
-              md-selected-item-change="selectedChampionChange(champion)"
-              md-items="champion in querySearch(searchText)"
-              md-item-text="champion.name"
-              md-min-length="0"
-              md-floating-label="Champion">
-              <md-item-template>
-                <div layout="row" layout-align="start center">
-                  <img src = "http://ddragon.leagueoflegends.com/cdn/5.2.1/img/champion/{{champion.image}}" alt ="champ img" height = "30" width ="30">
-                  <span class="item-title">
-                    {{champion.name}}
-                  </span>
-                </div>
-              </md-item-template>
-            </md-autocomplete>
-          </div>
-          <md-menu md-offset="12 20">
-            <md-button class="md-raised" ng-click="$mdOpenMenu($event)" class="md-button" aria-label="Open some menu">
-              Statistic: {{currentStat}}
-            </md-button>
-            <md-menu-content>
-              <div layout="column" layout-align="start center">
-                <div ng-repeat="stat in static.statistics">
-                  <md-menu-item>
-                    <md-button ng-click="onStatChange(stat)" aria-label="Do something">
-                      {{stat}}
-                    </md-button>
-                  </div>
-                </md-menu-item>
-              </div>
-            </md-menu-content>
-          </md-menu>
-        </div>
-        <div ng-if="!currentChampion.isLoading">
-          <canvas id="bar" class="chart chart-bar" data="currentChampion.data"
-          labels="currentChampion.labels"></canvas>
-        </div>
-        <div ng-if="currentChampion.isLoading">
-          <div layout="row" layout-align="center">
-            <md-progress-circular md-mode="indeterminate"></md-progress-circular>
-          </div>
-        </div>
-      </md-card-content>
-    </md-card>
+        </md-card-content>
+      </md-card>
+    </div>
   </div>
 </div>
-  Item stuff goes here
+<div ng-controller = "ItemCtrl">
+Item stuff goes here
+</div>
 </div>

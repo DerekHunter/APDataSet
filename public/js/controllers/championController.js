@@ -1,5 +1,5 @@
 angular.module('ApData')
-.controller('ExploreCtrl',['$scope', 'ChampionService', 'StaticDataService',
+.controller('ChampCtrl', ['$scope', 'ChampionService', 'StaticDataService',
 function($scope, ChampionService, StaticDataService){
 
     $scope.initializing = true;
