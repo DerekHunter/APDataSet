@@ -21,7 +21,7 @@ https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?champ
   })
 });
 
-https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?api_key='+apiKey, function(res) {
+https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListData=image&api_key='+apiKey, function(res) {
   itemBuffer = ''
   res.on('data', function(data){
     itemBuffer += data

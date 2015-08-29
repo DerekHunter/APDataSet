@@ -49,7 +49,7 @@ function($scope, ChampionService, StaticDataService){
 
     $scope.querySearch = function (query) {
       if($scope.searchText == ''){
-        return $scope.champions
+        return $scope.static.champions
       }else{
         var results = query ? $scope.static.champions.filter( createFilterFor(query) ) : [];
         return results;
