@@ -22,6 +22,7 @@ angular.module('ApData').factory('StaticDataService',['$http', function($http) {
    StaticData.items =[];
    StaticData.loadItemData = function(callback){
      $http.get('http://localhost:3000/api/static/items').then(function(response){
+       console.log(response)
        for( item in response.data){
          tmpItem = {}
          tmpItem.id = response.data[item].id;
