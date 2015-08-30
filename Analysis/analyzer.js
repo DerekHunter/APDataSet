@@ -35,11 +35,77 @@ function getGameItemCounts(game){
   return itemCounts;
 }
 
-function analyze(basePath){
+function analyzeItems(data){
+    itemAvgs = [];
+    for(item in data.items){
+      tmpItem = {};
+      tmpItem.patch = data.patch;
+      tmpItem.region = data.region;
+      tmpItem.ranked = data.ranked;
+      tmpItem.cnt = data.ranked;
+      tmpItem.id = item;
+      for(i = 0; i < data.items[item].length; i++){
+        tmpItem.cnt += data.items[item][i];
+      }
+      tmpItem.avgRate = tmpItem.cnt/data.numGames
+      itemAvgs.push(tmpItem);
+    }
+    return itemAvgs
+}
+
+function analyzeChamps(data){
+    championAvgs = [];
+    for(champ in data.champions){
+      tmpChamp = {};
+      tmpChamp.patch = data.patch;
+      tmpChamp.region = data.region;
+      tmpChamp.ranked = data.ranked;
+      tmpChamp.cnt = data.ranked;
+      tmpChamp.id = champ;
+
+      tmpChamp.kills = 0
+      tmpChamp.deaths = 0
+      tmpChamp.assists = 0
+      tmpChamp.totalTimeCrowdControlDealt = 0
+      tmpChamp.totalDamageDealtToChampions = 0
+      tmpChamp.wins = 0
+
+      for(i = 0; i < data.champions[champ].length; i++){
+        tmpChamp.kills +=  data.champions[champ][i].kills
+        tmpChamp.deaths +=  data.champions[champ][i].deaths
+        tmpChamp.assists +=  data.champions[champ][i].assists
+        tmpChamp.totalTimeCrowdControlDealt +=  data.champions[champ][i].totalTimeCrowdControlDealt
+        tmpChamp.totalDamageDealtToChampions +=  data.champions[champ][i].totalDamageDealtToChampions
+        if( data.champions[champ][i].winner){
+          tmpChamp.wins ++;
+        }
+      }
+      tmpChamp.kills /=  data.champions[champ].length;
+      tmpChamp.deaths /= data.champions[champ].length;
+      tmpChamp.assists /= data.champions[champ].length;
+      tmpChamp.totalTimeCrowdControlDealt /= data.champions[champ].length;
+      tmpChamp.totalDamageDealtToChampions /= data.champions[champ].length;
+      tmpChamp.winRate = tmpChamp.wins / data.champions[champ].length;
+      championAvgs.push(tmpChamp);
+    }
+    return championAvgs
+}
+
+function collect(patch, region, ranked){
+  if(ranked){
+      basePath = patch+'/RANKED_SOLO/'+region+'/'
+  }else{
+      basePath = patch+'/NORMAL_5X5/'+region+'/'
+  }
+
   data = {};
   data.items = {}
   data.champions = {}
+  data.patch = patch;
+  data.region = region;
+  data.ranked = ranked;
   gameFiles = fs.readdirSync(basePath);
+  data.numGames = gameFiles.length;
   counts = [];
   for(game = 0; game < gameFiles.length; game++){
     currentGame = JSON.parse(fs.readFileSync(basePath+gameFiles[game]));
@@ -56,7 +122,6 @@ function analyze(basePath){
     //Champions
     champions = getChampData(currentGame);
     for(champion = 0; champion < champions.length; champion++){
-      //console.log(champions[champion]);
       if(data.champions.hasOwnProperty(champions[champion].champId)){
         champId = champions[champion].champId
         delete champions[champion.champId]
@@ -72,6 +137,8 @@ function analyze(basePath){
   return data;
 }
 
-data = analyze('5.11/BR/')
-
-console.log(data.items[3050]);
+data = collect('5.11','BR', true)
+//console.log(data.champions);
+//console.log(analyzeItems(data))
+console.log(analyzeChamps(data))
+//console.log(data.items);
