@@ -32,6 +32,11 @@ https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListD
   })
 });
 
+router.get('/champion/:id/', function(req, res){
+  console.log("champId" + req.params.id);
+  res.send("ChampID: " + req.params.id)
+});
+
 router.get('/static/champions',function(req, res){
   res.json(staticChampData);
 });
