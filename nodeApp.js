@@ -1,7 +1,11 @@
 var express = require('express');
 var https = require('https')
+var db = require('monk')('localhost:27017')
 var router = express.Router();
 var app = express();
+
+champCollection = db.get('champions');
+itemCollection = db.get('items');
 
 apiKey = ''
 if(apiKey == ''){
@@ -33,8 +37,15 @@ https.get('https://global.api.pvp.net/api/lol/static-data/na/v1.2/item?itemListD
 });
 
 router.get('/champion/:id/', function(req, res){
-  console.log("champId" + req.params.id);
-  res.send("ChampID: " + req.params.id)
+  champCollection.find({id:req.params.id}, function(err, docs){
+    res.json(docs)
+  })
+});
+
+router.get('/item/:id/', function(req, res){
+  itemCollection.find({id:req.params.id}, function(err, docs){
+    res.json(docs)
+  })
 });
 
 router.get('/static/champions',function(req, res){

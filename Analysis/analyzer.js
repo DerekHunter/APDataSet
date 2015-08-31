@@ -1,4 +1,5 @@
 var fs = require('fs');
+var db = require('monk')('localhost:27017')
 
 function getChampData(game){
   champData = [];
@@ -10,6 +11,7 @@ function getChampData(game){
     tempChamp.kills = players[player]["stats"].kills
     tempChamp.deaths = players[player]["stats"].deaths
     tempChamp.assists = players[player]["stats"].assists
+    tempChamp.totalDamageTaken = players[player]["stats"].totalDamageTaken
     tempChamp.totalTimeCrowdControlDealt = players[player]["stats"].totalTimeCrowdControlDealt
     tempChamp.totalDamageDealtToChampions = players[player]["stats"].totalDamageDealtToChampions
     tempChamp.winner = players[player]["stats"].winner
@@ -69,6 +71,7 @@ function analyzeChamps(data){
       tmpChamp.totalTimeCrowdControlDealt = 0
       tmpChamp.totalDamageDealtToChampions = 0
       tmpChamp.wins = 0
+      tmpChamp.totalDamageTaken = 0;
 
       for(i = 0; i < data.champions[champ].length; i++){
         tmpChamp.kills +=  data.champions[champ][i].kills
@@ -76,6 +79,7 @@ function analyzeChamps(data){
         tmpChamp.assists +=  data.champions[champ][i].assists
         tmpChamp.totalTimeCrowdControlDealt +=  data.champions[champ][i].totalTimeCrowdControlDealt
         tmpChamp.totalDamageDealtToChampions +=  data.champions[champ][i].totalDamageDealtToChampions
+        tmpChamp.totalDamageTaken +=  data.champions[champ][i].totalDamageTaken
         if( data.champions[champ][i].winner){
           tmpChamp.wins ++;
         }
@@ -85,6 +89,7 @@ function analyzeChamps(data){
       tmpChamp.assists /= data.champions[champ].length;
       tmpChamp.totalTimeCrowdControlDealt /= data.champions[champ].length;
       tmpChamp.totalDamageDealtToChampions /= data.champions[champ].length;
+      tmpChamp.totalDamageTaken /= data.champions[champ].length;
       tmpChamp.winRate = tmpChamp.wins / data.champions[champ].length;
       championAvgs.push(tmpChamp);
     }
@@ -140,5 +145,17 @@ function collect(patch, region, ranked){
 data = collect('5.11','BR', true)
 //console.log(data.champions);
 //console.log(analyzeItems(data))
-console.log(analyzeChamps(data))
-//console.log(data.items);
+
+champData = analyzeChamps(data)
+champCollection = db.get('champions');
+for(i = 0; i < champData.length; i++){
+  champCollection.insert(champData[i])
+}
+
+itemData = analyzeItems(data);
+itemCollection = db.get('items');
+for(i = 0; i < itemData.length; i++){
+  itemCollection.insert(itemData[i])
+}
+
+db.close();
